@@ -27,7 +27,6 @@ namespace Match3
 		public float dragThreshold = 1.2f;
 
 		public int rows, columns;
-		public GameObject matchPieceObject;
 		[SerializeField]
 		public List<MatchPieceType> pieceTypes = new List<MatchPieceType>();
 
@@ -36,15 +35,16 @@ namespace Match3
 		public bool gameIsOver { get; set; }
 
 		private MatchPiece[][] board;
-
-		private MatchPiece currentPiece;
+	    private GameObject matchPieceObject;
+        private MatchPiece currentPiece;
 		private SwapDirection currentDirection;
 
 		public void Start()
 		{
 			instance = this;
 
-			Vector2 offset = matchPieceObject.GetComponent<SpriteRenderer>().bounds.size;
+		    matchPieceObject = (GameObject) Instantiate(Resources.Load("Prefabs/SampleObject"));
+            Vector2 offset = matchPieceObject.GetComponent<SpriteRenderer>().bounds.size;
 			CreateBoard(offset.x, offset.y);
 
 			canMove = true;
@@ -257,11 +257,6 @@ namespace Match3
 
 		private void ExplodePieces(List<MatchPiece> pieceList)
 		{
-			var sprite = pieceList[0].type.sprite;
-			var name = pieceList[0].type.name;
-			var position = pieceList[Mathf.CeilToInt(pieceList.Count / 2)].transform.position;
-			//BingoController.instance.DrawBall(sprite, position, name, pieceList.Count > 3);
-
 			pieceList.ForEach(x => x.Explode(TIME_TO_EXPLODE));
 		}
 
