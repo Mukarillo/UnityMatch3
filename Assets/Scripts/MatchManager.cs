@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 namespace Match3
@@ -254,10 +255,14 @@ namespace Match3
 
 			StartCoroutine(CheckForMatches(false));
 		}
-
+        int score=0;
+		public Text t;
 		private void ExplodePieces(List<MatchPiece> pieceList)
 		{
-			pieceList.ForEach(x => x.Explode(TIME_TO_EXPLODE));
+			pieceList.ForEach(x => x.Explode(TIME_TO_EXPLODE));score++;
+		}
+		public void Update(){
+			t.text = score.ToString();
 		}
 
 		private bool InBounds(int x, int y)
